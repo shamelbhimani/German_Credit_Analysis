@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 def remap_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
