@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
 
 def log_transform(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     """
@@ -27,4 +28,21 @@ def log_transform(df: pd.DataFrame, columns: list) -> pd.DataFrame:
             break
         df_processed.drop(columns=to_drop, axis=1, inplace=True)
         print('Transformations complete.')
+    return df_processed
+
+
+def scale_data(df_processed: pd.DataFrame) -> pd.DataFrame:
+    """
+    This function scales all numeric features within the closed interval [-1,1].
+    :param df_processed: pd.DataFrame
+    :return: pd.DataFrame
+    """
+    processed_numeric_features = [col for col in df_processed.columns.tolist(
+
+    ) if np.issubdtype(df_processed[col].dtype, np.number)]
+
+    scaler = StandardScaler()
+    df_processed[processed_numeric_features] = scaler.fit_transform(
+        df_processed[processed_numeric_features])
+
     return df_processed
